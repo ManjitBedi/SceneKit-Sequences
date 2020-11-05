@@ -52,4 +52,18 @@ box2.firstMaterial?.specular.contents = UIColor.orange
 boxNode2.rotation = SCNVector4(x: 1.0, y: 1.0, z: 0.0, w: 0.0)
 boxNode2.addAnimation(spin, forKey: "spin around")
 
+let fadeInAction = SCNAction.fadeIn(duration: 2.0)
+let fadeOutAction = SCNAction.fadeOut(duration: 1.5)
+
+let action = SCNAction.moveBy(x: 0, y: -2, z: 0, duration: 3)
+let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: 3))
+let group = SCNAction.group([action, rotate])
+
+let blockAction = SCNAction.run { (node) in
+    print("sequence is over")
+}
+
+let sequence = SCNAction.sequence([fadeInAction, group, fadeOutAction,blockAction, SCNAction.removeFromParentNode()])
+
+boxNode2.runAction(sequence)
 
