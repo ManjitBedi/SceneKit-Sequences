@@ -67,7 +67,7 @@ func addBox2() -> SCNNode {
 func addBox3() -> SCNNode {
     let box = SCNBox(width: 0.5, height: 0.5, length: 0.5, chamferRadius: 0.0)
     let boxNode = SCNNode(geometry: box)
-    boxNode.position = SCNVector3(1, 1.5, 0)
+    boxNode.position = SCNVector3(2, 1.5, 0)
     scene.rootNode.addChildNode(boxNode)
     box.firstMaterial?.diffuse.contents  = UIColor.green
     box.firstMaterial?.specular.contents = UIColor.blue
