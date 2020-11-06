@@ -48,18 +48,15 @@ func addBox2() -> SCNNode {
     boxNode.position = SCNVector3(0, 1.5, 0)
     box.firstMaterial?.diffuse.contents  = UIColor.yellow
     box.firstMaterial?.specular.contents = UIColor.orange
-    boxNode.rotation = SCNVector4(x: 1.0, y: 1.0, z: 0.0, w: 0.0)
-    let fadeInAction = SCNAction.fadeIn(duration: 2.0)
-    let fadeOutAction = SCNAction.fadeOut(duration: 1.5)
-    let action = SCNAction.moveBy(x: 0, y: -2, z: 0, duration: 3)
-    let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: 3))
+    let action = SCNAction.moveBy(x: 0, y: -3, z: 0, duration: 3)
+    let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(-1, 0, 1), duration: 3))
     let group = SCNAction.group([action, rotate])
 
     let blockAction = SCNAction.run { (node) in
         print("sequence is over")
     }
 
-    let sequence = SCNAction.sequence([fadeInAction, group, fadeOutAction,blockAction, SCNAction.removeFromParentNode()])
+    let sequence = SCNAction.sequence([group, blockAction, SCNAction.removeFromParentNode()])
     boxNode.runAction(sequence)
 
     return boxNode
@@ -74,18 +71,15 @@ func addBox3() -> SCNNode {
     scene.rootNode.addChildNode(boxNode)
     box.firstMaterial?.diffuse.contents  = UIColor.green
     box.firstMaterial?.specular.contents = UIColor.blue
-    boxNode.rotation = SCNVector4(x: -1.0, y: 1.0, z: 0.0, w: 0.0)
-    let fadeInAction = SCNAction.fadeIn(duration: 2.0)
-    let fadeOutAction = SCNAction.fadeOut(duration: 1.5)
-    let action = SCNAction.moveBy(x: 0, y: -2, z: 0, duration: 3)
-    let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: 3))
+    let action = SCNAction.moveBy(x: 0, y: -3, z: 0, duration: 3)
+    let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 1), duration: 3))
     let group = SCNAction.group([action, rotate])
 
     let blockAction = SCNAction.run { (node) in
         print("sequence is over")
     }
 
-    let sequence = SCNAction.sequence([fadeInAction, group, fadeOutAction,blockAction, SCNAction.removeFromParentNode()])
+    let sequence = SCNAction.sequence([group, blockAction, SCNAction.removeFromParentNode()])
 
     boxNode.runAction(sequence)
 
