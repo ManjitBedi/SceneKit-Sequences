@@ -27,10 +27,10 @@ scene.rootNode.addChildNode(cameraNode)
 
 let actionDuration: TimeInterval = 3
 
-func addBox() ->SCNNode {
+func addBox(positon: SCNVector3) ->SCNNode {
     let box = SCNBox(width: 0.5, height: 0.5, length: 0.5, chamferRadius: 0.0)
     let boxNode = SCNNode(geometry: box)
-    boxNode.position = SCNVector3(-2, 1.5, 0)
+    boxNode.position = positon
     box.firstMaterial?.diffuse.contents  = UIColor.gray
     box.firstMaterial?.specular.contents = UIColor.darkGray
     boxNode.rotation = SCNVector4(x: 1.0, y: 1.0, z: 0.0, w: 0.0)
@@ -44,10 +44,10 @@ func addBox() ->SCNNode {
 }
 
 // Add a 2nd box
-func addBox2(duration: TimeInterval) -> SCNNode {
+func addBox2(positon: SCNVector3, duration: TimeInterval) -> SCNNode {
     let box = SCNBox(width: 0.5, height: 0.5, length: 0.5, chamferRadius: 0.0)
     let boxNode = SCNNode(geometry: box)
-    boxNode.position = SCNVector3(0, 1.5, 0)
+    boxNode.position = positon
     box.firstMaterial?.diffuse.contents  = UIColor.yellow
     box.firstMaterial?.specular.contents = UIColor.orange
     let action = SCNAction.moveBy(x: 0, y: -3, z: 0, duration: duration)
@@ -66,10 +66,10 @@ func addBox2(duration: TimeInterval) -> SCNNode {
 
 
 // Add a 3rd box
-func addBox3(duration: TimeInterval) -> SCNNode {
+func addBox3(positon: SCNVector3, duration: TimeInterval) -> SCNNode {
     let box = SCNBox(width: 0.5, height: 0.5, length: 0.5, chamferRadius: 0.0)
     let boxNode = SCNNode(geometry: box)
-    boxNode.position = SCNVector3(2, 1.5, 0)
+    boxNode.position = positon
     scene.rootNode.addChildNode(boxNode)
     box.firstMaterial?.diffuse.contents  = UIColor.green
     box.firstMaterial?.specular.contents = UIColor.blue
@@ -78,20 +78,26 @@ func addBox3(duration: TimeInterval) -> SCNNode {
     let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 1), duration: duration))
     let group = SCNAction.group([moveAction, rotate])
 
-    let blockAction = SCNAction.run { (node) in
-        print("sequence is over")
-    }
-
-    let sequence = SCNAction.sequence([group, blockAction, SCNAction.removeFromParentNode()])
+    let sequenceOne = SCNAction.sequence([group])
+    let end = endAction()
+    let sequence = SCNAction.sequence([sequenceOne, end])
 
     boxNode.runAction(sequence)
 
     return boxNode
 }
 
-// create a series of actions with randomized movement
-func randomizedMovementAction (duration: TimeInterval) -> SCNAction {
+// spin fast while scaling down to a very small size
+func endAction()  -> SCNAction {
+    let duration: TimeInterval = 0.25
+    let scale = SCNAction.scale(to: 0.01, duration: duration)
+    //let rotate = SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: duration)
+    //let group = SCNAction.group([scale, rotate])
+    return scale
+}
 
+// create a sequence of actions with randomized movement
+func randomizedMovementAction (duration: TimeInterval) -> SCNAction {
 
     // create 4 sequences adding up the input duration
     var modifiedDuration:Float = Float(duration)
@@ -138,11 +144,11 @@ func randomizedMovementAction (duration: TimeInterval) -> SCNAction {
 
 
 // Add a box primitive to the playground
-let node = addBox()
+let node = addBox(positon: SCNVector3(-2, 1.5, 0))
 scene.rootNode.addChildNode(node)
 
-let nodeB = addBox2(duration: actionDuration)
+let nodeB = addBox2(positon: SCNVector3(2, 1.5, 0), duration: actionDuration)
 scene.rootNode.addChildNode(nodeB)
 
-let nodeC = addBox3(duration: actionDuration)
+let nodeC = addBox3(positon: SCNVector3(0, 1.5, 0), duration: actionDuration)
 scene.rootNode.addChildNode(nodeC)
