@@ -75,7 +75,7 @@ func addBox3(positon: SCNVector3, duration: TimeInterval) -> SCNNode {
     box.firstMaterial?.specular.contents = UIColor.blue
     let moveAction = randomizedMovementAction(duration: duration)
 
-    let rotate = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 1), duration: duration))
+    let rotate = SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 1), duration: duration)
     let group = SCNAction.group([moveAction, rotate])
 
     let sequenceOne = SCNAction.sequence([group])
