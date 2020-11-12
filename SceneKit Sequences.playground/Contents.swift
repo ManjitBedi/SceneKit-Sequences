@@ -87,13 +87,16 @@ func addBox3(positon: SCNVector3, duration: TimeInterval) -> SCNNode {
     return boxNode
 }
 
-// spin fast while scaling down to a very small size
+// spin fast while scaling down to a very small size with a fade
 func endAction()  -> SCNAction {
     let duration: TimeInterval = 0.25
+
     let scale = SCNAction.scale(to: 0.01, duration: duration)
-    //let rotate = SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: duration)
-    //let group = SCNAction.group([scale, rotate])
-    return scale
+    let rotate = SCNAction.rotate(by: .pi, around: SCNVector3(0, 0, 1), duration: duration)
+    let fadeOut = SCNAction.fadeOut(duration: 0.5)
+
+    let group = SCNAction.group([scale, fadeOut, rotate])
+    return group
 }
 
 // create a sequence of actions with randomized movement
